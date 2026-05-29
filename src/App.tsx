@@ -558,14 +558,16 @@ export default function App() {
 
         .mobile-nav {
           display: none;
-          margin-top: 12px;
-          padding-top: 14px;
+          width: 100%;
+          padding: 10px 18px 14px;
           border-top: 1px solid rgba(130, 60, 150, 0.14);
         }
 
         .mobile-nav__links {
-          display: grid;
-          gap: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0;
         }
 
         .mobile-nav__links button {
@@ -575,8 +577,14 @@ export default function App() {
           border-bottom: 1px solid rgba(130, 60, 150, 0.1);
           background: none;
           text-align: center;
+          font-size: 1rem;
           font-weight: 700;
           color: var(--text);
+          cursor: pointer;
+        }
+
+        .mobile-nav__links button:last-child {
+          border-bottom: 0;
         }
 
         .hero {
@@ -1840,7 +1848,7 @@ export default function App() {
         @media (max-width: 860px) {
           .topbar {
             width: calc(100% - 16px);
-            border-radius: 28px;
+            border-radius: ${mobileOpen ? "28px 28px 20px 20px" : "28px"};
           }
 
           .nav-links,
@@ -2013,28 +2021,29 @@ export default function App() {
               </button>
             </div>
 
-            <div className="mobile-nav" id="mobile-nav">
-              <div className="mobile-nav__links">
-                {navLinks.map((link) => (
-                  <button
-                    key={link.id}
-                    onClick={() => {
-                      setMobileOpen(false);
-                      scrollToId(link.id);
-                    }}
-                  >
-                    {link.label}
-                  </button>
-                ))}
+          </div>
+
+          <div className="mobile-nav" id="mobile-nav">
+            <div className="mobile-nav__links">
+              {navLinks.map((link) => (
                 <button
+                  key={link.id}
                   onClick={() => {
                     setMobileOpen(false);
-                    scrollToId("order");
+                    scrollToId(link.id);
                   }}
                 >
-                  Order Now
+                  {link.label}
                 </button>
-              </div>
+              ))}
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  scrollToId("order");
+                }}
+              >
+                Order Now
+              </button>
             </div>
           </div>
         </header>
