@@ -1927,9 +1927,24 @@ export default function App() {
             align-items: center;
           }
 
+          .brand {
+            flex: 1;
+            gap: 8px;
+          }
+
+          .brand__copy {
+            flex: 1;
+            text-align: center;
+          }
+
+          .brand__name {
+            font-size: 1.25rem;
+          }
+
           .brand__tag {
-            letter-spacing: 0.08em;
-            font-size: 0.62rem;
+            letter-spacing: 0.10em;
+            font-size: 0.66rem;
+            text-align: center;
           }
 
           .hero {
