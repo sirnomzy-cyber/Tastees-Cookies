@@ -322,17 +322,17 @@ export default function App() {
       <style>{`
         :root {
           color-scheme: light;
-          --bg: #fdf6ff;
-          --bg-soft: #f8f0ff;
-          --panel: rgba(253, 242, 255, 0.72);
-          --panel-strong: rgba(254, 248, 255, 0.92);
-          --text: #1e0a2e;
-          --muted: #7a5c8a;
-          --line: rgba(130, 60, 150, 0.14);
-          --gold: #c2387e;
-          --gold-soft: rgba(194, 56, 126, 0.14);
-          --shadow: 0 26px 60px rgba(80, 20, 100, 0.10);
-          --shadow-strong: 0 36px 80px rgba(80, 20, 100, 0.18);
+          --bg: #fdf6f0;
+          --bg-soft: #faf0e8;
+          --panel: rgba(253, 246, 240, 0.72);
+          --panel-strong: rgba(255, 250, 245, 0.92);
+          --text: #2a0d1e;
+          --muted: #8a4a6a;
+          --line: rgba(180, 50, 100, 0.14);
+          --gold: #d63a7a;
+          --gold-soft: rgba(214, 58, 122, 0.14);
+          --shadow: 0 26px 60px rgba(107, 31, 168, 0.10);
+          --shadow-strong: 0 36px 80px rgba(107, 31, 168, 0.18);
           --radius-xl: 36px;
           --radius-lg: 28px;
           --radius-md: 22px;
@@ -346,9 +346,9 @@ export default function App() {
         body {
           margin: 0;
           background:
-            radial-gradient(circle at top left, rgba(200, 150, 230, 0.22), transparent 28%),
-            radial-gradient(circle at right top, rgba(240, 180, 220, 0.28), transparent 24%),
-            linear-gradient(180deg, #fff8ff 0%, #fdf0ff 38%, #f9eaff 100%);
+            radial-gradient(circle at top left, rgba(214, 58, 122, 0.12), transparent 28%),
+            radial-gradient(circle at right top, rgba(107, 31, 168, 0.14), transparent 24%),
+            linear-gradient(180deg, #fff8f2 0%, #fdf0e8 38%, #fae8de 100%);
           color: var(--text);
           font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           overflow-x: hidden;
@@ -410,9 +410,9 @@ export default function App() {
           padding: 16px 18px;
           border: 1px solid rgba(255, 255, 255, 0.45);
           border-radius: 999px;
-          background: linear-gradient(180deg, rgba(255, 248, 255, 0.85), rgba(252, 240, 255, 0.65));
+          background: linear-gradient(180deg, rgba(255, 250, 245, 0.88), rgba(252, 240, 232, 0.68));
           backdrop-filter: blur(18px);
-          box-shadow: 0 14px 34px rgba(80, 20, 110, 0.10);
+          box-shadow: 0 14px 34px rgba(107, 31, 168, 0.10);
         }
 
         .topbar__inner {
@@ -436,8 +436,8 @@ export default function App() {
           height: 42px;
           border-radius: 16px;
           color: #fffaf4;
-          background: linear-gradient(145deg, #5b1e8a, #a0287a 68%, #e8609a);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 10px 18px rgba(100, 30, 140, 0.25);
+          background: linear-gradient(145deg, #6b1fa8, #b02878 68%, #d63a7a);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 10px 18px rgba(107, 31, 168, 0.28);
         }
 
         .brand__copy {
@@ -533,7 +533,7 @@ export default function App() {
           height: 26px;
           padding: 0 8px;
           border-radius: 999px;
-          background: linear-gradient(135deg, #5b1e8a, #c2387e);
+          background: linear-gradient(135deg, #6b1fa8, #d63a7a);
           color: white;
           font-size: 0.84rem;
         }
@@ -574,7 +574,7 @@ export default function App() {
           border: 0;
           border-bottom: 1px solid rgba(130, 60, 150, 0.1);
           background: none;
-          text-align: left;
+          text-align: center;
           font-weight: 700;
           color: var(--text);
         }
@@ -626,7 +626,7 @@ export default function App() {
           align-items: center;
           gap: 10px;
           margin: 0 0 20px;
-          color: #8c2a72;
+          color: #9b1f6e;
           font-size: 0.75rem;
           font-weight: 800;
           text-transform: uppercase;
@@ -654,7 +654,7 @@ export default function App() {
 
         .hero__title span {
           display: inline-block;
-          background: linear-gradient(120deg, #2a0a44 10%, #8a1e78 42%, #e060a0 78%, #5b1e8a);
+          background: linear-gradient(120deg, #2a0d1e 10%, #6b1fa8 42%, #d63a7a 78%, #7a3010);
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
@@ -713,8 +713,8 @@ export default function App() {
 
         .button--primary {
           color: #fffaf5;
-          background: linear-gradient(135deg, #5b1e8a, #a0287a 58%, #e060a0);
-          box-shadow: 0 18px 36px rgba(130, 30, 130, 0.28);
+          background: linear-gradient(135deg, #6b1fa8, #b02878 58%, #d63a7a);
+          box-shadow: 0 18px 36px rgba(107, 31, 168, 0.28);
         }
 
         .button--ghost {
@@ -757,9 +757,9 @@ export default function App() {
           border-radius: 42% 58% 48% 52% / 50% 40% 60% 50%;
           background:
             radial-gradient(circle at 34% 22%, rgba(255,255,255,0.6), transparent 26%),
-            radial-gradient(circle at 65% 20%, rgba(230, 180, 255, 0.35), transparent 30%),
-            radial-gradient(circle at 50% 62%, rgba(200, 60, 160, 0.18), transparent 55%),
-            linear-gradient(145deg, rgba(253, 244, 255, 0.9), rgba(235, 210, 250, 0.6));
+            radial-gradient(circle at 65% 20%, rgba(214, 58, 122, 0.20), transparent 30%),
+            radial-gradient(circle at 50% 62%, rgba(107, 31, 168, 0.15), transparent 55%),
+            linear-gradient(145deg, rgba(255, 248, 240, 0.9), rgba(245, 220, 200, 0.6));
           filter: blur(4px);
           box-shadow: inset 0 1px 0 rgba(255,255,255,0.72), 0 24px 80px rgba(117, 72, 35, 0.12);
           animation: float 9s ease-in-out infinite alternate;
@@ -789,9 +789,9 @@ export default function App() {
           border: 1px solid rgba(255,255,255,0.45);
           background:
             radial-gradient(circle at 35% 30%, rgba(255,255,255,0.55), transparent 20%),
-            radial-gradient(circle at 55% 60%, rgba(80, 20, 100, 0.24), transparent 28%),
-            linear-gradient(145deg, #7b1fa2, #e040b0 78%);
-          box-shadow: 0 20px 38px rgba(100, 30, 140, 0.22), inset 0 1px 0 rgba(255,255,255,0.5);
+            radial-gradient(circle at 55% 60%, rgba(107, 31, 168, 0.22), transparent 28%),
+            linear-gradient(145deg, #6b1fa8, #d63a7a 78%);
+          box-shadow: 0 20px 38px rgba(107, 31, 168, 0.22), inset 0 1px 0 rgba(255,255,255,0.5);
           opacity: 0.75;
           animation: orbit 14s ease-in-out infinite alternate;
         }
@@ -967,17 +967,17 @@ export default function App() {
           padding: 12px 16px;
           border: 0;
           border-radius: 999px;
-          background: linear-gradient(135deg, #5c2d17, #bc7831 60%, #edc084);
+          background: linear-gradient(135deg, #6b1fa8, #b02878 58%, #d63a7a);
           color: #fffaf5;
           font-weight: 800;
           cursor: pointer;
-          box-shadow: 0 16px 24px rgba(135, 77, 29, 0.22);
+          box-shadow: 0 16px 24px rgba(107, 31, 168, 0.28);
           transition: transform 220ms ease, box-shadow 220ms ease;
         }
 
         .cookie-card__action:hover {
           transform: translateY(-2px);
-          box-shadow: 0 22px 34px rgba(135, 77, 29, 0.28);
+          box-shadow: 0 22px 34px rgba(107, 31, 168, 0.34);
         }
 
         .cookie-card__action svg {
@@ -1284,7 +1284,7 @@ export default function App() {
           width: 54px;
           height: 54px;
           border-radius: 18px;
-          background: linear-gradient(135deg, rgba(100, 30, 140, 0.12), rgba(220, 120, 200, 0.2));
+          background: linear-gradient(135deg, rgba(107, 31, 168, 0.12), rgba(220, 120, 200, 0.2));
           color: #7b1fa2;
         }
 
@@ -1425,7 +1425,7 @@ export default function App() {
         .review-dot[aria-current="true"] {
           width: 30px;
           border-radius: 999px;
-          background: linear-gradient(90deg, #5b1e8a, #c2387e);
+          background: linear-gradient(90deg, #6b1fa8, #d63a7a);
         }
 
         .gallery-grid {
@@ -1494,7 +1494,7 @@ export default function App() {
             radial-gradient(circle at top left, rgba(255,255,255,0.34), transparent 24%),
             radial-gradient(circle at right bottom, rgba(220, 140, 240, 0.28), transparent 28%),
             linear-gradient(135deg, rgba(45, 15, 80, 0.97), rgba(100, 30, 130, 0.96) 48%, rgba(194, 56, 126, 0.93));
-          box-shadow: 0 34px 80px rgba(80, 20, 110, 0.30);
+          box-shadow: 0 34px 80px rgba(107, 31, 168, 0.30);
           color: #fff9f3;
         }
 
@@ -1908,7 +1908,7 @@ export default function App() {
           }
 
           .topbar__inner {
-            align-items: start;
+            align-items: center;
           }
 
           .brand__tag {
@@ -1976,7 +1976,7 @@ export default function App() {
                 <img src="/images/tastees-logo.jpg" alt="Tastee's Cookies logo" style={{ width: "42px", height: "42px", objectFit: "contain", borderRadius: "10px" }} />
               </span>
               <span className="brand__copy">
-                <span className="brand__name" style={{ fontFamily: "'Pacifico', cursive", background: "linear-gradient(120deg, #5b1e8a, #c2387e)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Tastee's Cookies</span>
+                <span className="brand__name" style={{ fontFamily: "'Pacifico', cursive", background: "linear-gradient(120deg, #6b1fa8, #d63a7a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Tastee's Cookies</span>
                 <span className="brand__tag">Freshly baked happiness</span>
               </span>
             </button>
@@ -2427,7 +2427,7 @@ export default function App() {
                     <img src="/images/tastees-logo.jpg" alt="Tastee's Cookies logo" style={{ width: "42px", height: "42px", objectFit: "contain", borderRadius: "10px" }} />
                   </span>
                   <span className="brand__copy">
-                    <span className="brand__name" style={{ fontFamily: "'Pacifico', cursive", background: "linear-gradient(120deg, #5b1e8a, #c2387e)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Tastee's Cookies</span>
+                    <span className="brand__name" style={{ fontFamily: "'Pacifico', cursive", background: "linear-gradient(120deg, #6b1fa8, #d63a7a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Tastee's Cookies</span>
                     <span className="brand__tag">Freshly baked happiness</span>
                   </span>
                 </div>
@@ -2482,8 +2482,8 @@ export default function App() {
                 <h4>Contact</h4>
                 <ul>
                   <li>hello@tasteescookies.com</li>
-                  <li>+234 901 234 5678</li>
-                  <li>Lagos, Nigeria</li>
+                  <li>+1 (240) 877 - 8752</li>
+                  <li>Texas, United States</li>
                 </ul>
               </div>
 
