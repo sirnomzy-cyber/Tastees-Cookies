@@ -413,6 +413,7 @@ export default function App() {
           background: linear-gradient(180deg, rgba(255, 250, 245, 0.88), rgba(252, 240, 232, 0.68));
           backdrop-filter: blur(18px);
           box-shadow: 0 14px 34px rgba(107, 31, 168, 0.10);
+          overflow: visible;
         }
 
         .topbar__inner {
@@ -426,7 +427,7 @@ export default function App() {
           display: inline-flex;
           align-items: center;
           gap: 12px;
-          min-width: max-content;
+          min-width: 0;
         }
 
         .brand__mark {
@@ -443,6 +444,7 @@ export default function App() {
         .brand__copy {
           display: grid;
           gap: 2px;
+          overflow: visible;
         }
 
         .brand__name {
@@ -458,7 +460,9 @@ export default function App() {
           font-size: 0.74rem;
           font-weight: 700;
           text-transform: uppercase;
-          letter-spacing: 0.24em;
+          letter-spacing: 0.18em;
+          overflow: visible;
+          white-space: nowrap;
         }
 
         .nav-links {
@@ -654,9 +658,11 @@ export default function App() {
           font-family: 'Playfair Display', Georgia, serif;
           font-size: clamp(3.6rem, 8vw, 7.6rem);
           font-weight: 800;
-          line-height: 0.92;
+          line-height: 1.05;
           letter-spacing: -0.04em;
           text-wrap: balance;
+          overflow: visible;
+          padding-bottom: 0.1em;
           animation: titleGlow 7s ease-in-out infinite alternate;
         }
 
@@ -666,6 +672,8 @@ export default function App() {
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
+          padding-bottom: 0.12em;
+          line-height: inherit;
         }
 
         .hero__copy {
@@ -1920,7 +1928,8 @@ export default function App() {
           }
 
           .brand__tag {
-            letter-spacing: 0.18em;
+            letter-spacing: 0.08em;
+            font-size: 0.62rem;
           }
 
           .hero {
