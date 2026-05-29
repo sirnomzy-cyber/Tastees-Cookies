@@ -1999,7 +1999,7 @@ export default function App() {
                 <img src="/images/tastees-logo.jpg" alt="Tastee's Cookies logo" style={{ width: "42px", height: "42px", objectFit: "contain", borderRadius: "10px" }} />
               </span>
               <span className="brand__copy">
-                <span className="brand__name" style={{ fontFamily: "'Pacifico', cursive", background: "linear-gradient(120deg, #6b1fa8, #d63a7a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Tastee's Cookies</span>
+                <span className="brand__name" style={{ fontFamily: "'Courgette', cursive", background: "linear-gradient(120deg, #6b1fa8, #d63a7a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Tastee's Cookies</span>
                 <span className="brand__tag">Freshly baked happiness</span>
               </span>
             </button>
@@ -2085,9 +2085,7 @@ export default function App() {
                     <span aria-hidden="true">↘</span>
                   </button>
                 </div>
-                <p className="hero__note">
-                  <strong>Made daily.</strong> Warm delivery boxes, gift-ready packaging, and a finish that feels like a pastry boutique.
-                </p>
+
               </div>
 
               <div className="hero__visual">
@@ -2451,7 +2449,7 @@ export default function App() {
                     <img src="/images/tastees-logo.jpg" alt="Tastee's Cookies logo" style={{ width: "42px", height: "42px", objectFit: "contain", borderRadius: "10px" }} />
                   </span>
                   <span className="brand__copy">
-                    <span className="brand__name" style={{ fontFamily: "'Pacifico', cursive", background: "linear-gradient(120deg, #6b1fa8, #d63a7a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Tastee's Cookies</span>
+                    <span className="brand__name" style={{ fontFamily: "'Courgette', cursive", background: "linear-gradient(120deg, #6b1fa8, #d63a7a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Tastee's Cookies</span>
                     <span className="brand__tag">Freshly baked happiness</span>
                   </span>
                 </div>
