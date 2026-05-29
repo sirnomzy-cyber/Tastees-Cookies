@@ -1935,6 +1935,12 @@ export default function App() {
             align-items: stretch;
           }
 
+          .newsletter input {
+            border-radius: 14px;
+            flex: none;
+            width: 100%;
+          }
+
           .button,
           .button--ghost,
           .button--soft {
