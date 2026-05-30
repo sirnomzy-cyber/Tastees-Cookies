@@ -423,6 +423,8 @@ export default function App() {
   function changeQty(name: string, delta: number) {
     setQuantities(q => ({ ...q, [name]: Math.max(1, (q[name] ?? 1) + delta) }));
   }
+
+  function handleCheckout() {
     if (checkoutUrl) {
       window.open(checkoutUrl, "_blank");
     } else {
