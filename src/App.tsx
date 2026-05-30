@@ -228,9 +228,9 @@ function renderBenefitIcon(kind: Benefit["icon"]) {
 
 const SHOPIFY_DOMAIN = "909y05-xq.myshopify.com";
 const SHOPIFY_TOKEN  = "612fc94847a0e9554a69e1e8fd0db9ac";
-const STOREFRONT_URL = `https://${SHOPIFY_DOMAIN}/api/2024-01/graphql.json`;
+const STOREFRONT_URL = `https://${SHOPIFY_DOMAIN}/api/2024-04/graphql.json`;
 
-async function shopifyFetch(query: string, variables = {}) {
+async function shopifyFetch(query: string, variables: Record<string, unknown> = {}) {
   const res = await fetch(STOREFRONT_URL, {
     method: "POST",
     headers: {
@@ -239,38 +239,44 @@ async function shopifyFetch(query: string, variables = {}) {
     },
     body: JSON.stringify({ query, variables }),
   });
-  return res.json();
+  if (!res.ok) throw new Error(`Shopify API error: ${res.status}`);
+  const json = await res.json();
+  if (json.errors) throw new Error(json.errors[0]?.message ?? "Shopify error");
+  return json;
 }
 
-async function createCheckout(): Promise<{ id: string; webUrl: string }> {
+async function createCart(): Promise<{ id: string; checkoutUrl: string }> {
   const data = await shopifyFetch(`
     mutation {
-      checkoutCreate(input: {}) {
-        checkout { id webUrl }
+      cartCreate {
+        cart { id checkoutUrl }
+        userErrors { field message }
       }
     }
   `);
-  return data.data.checkoutCreate.checkout;
+  const errors = data.data?.cartCreate?.userErrors;
+  if (errors?.length) throw new Error(errors[0].message);
+  return data.data.cartCreate.cart;
 }
 
-async function addLineItem(checkoutId: string, variantId: string): Promise<{ id: string; webUrl: string; lineItems: { edges: { node: { quantity: number } }[] } }> {
+async function addToCart(cartId: string, merchandiseId: string): Promise<{ id: string; checkoutUrl: string; totalQuantity: number }> {
   const data = await shopifyFetch(`
-    mutation($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
-      checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
-        checkout {
-          id webUrl
-          lineItems(first: 50) { edges { node { quantity } } }
-        }
+    mutation($cartId: ID!, $lines: [CartLineInput!]!) {
+      cartLinesAdd(cartId: $cartId, lines: $lines) {
+        cart { id checkoutUrl totalQuantity }
+        userErrors { field message }
       }
     }
   `, {
-    checkoutId,
-    lineItems: [{ variantId, quantity: 1 }],
+    cartId,
+    lines: [{ merchandiseId, quantity: 1 }],
   });
-  return data.data.checkoutLineItemsAdd.checkout;
+  const errors = data.data?.cartLinesAdd?.userErrors;
+  if (errors?.length) throw new Error(errors[0].message);
+  return data.data.cartLinesAdd.cart;
 }
 
-async function fetchProducts(): Promise<{ id: string; title: string; variants: { edges: { node: { id: string; priceV2: { amount: string } } }[] } }[]> {
+async function fetchProducts(): Promise<{ id: string; title: string; variants: { edges: { node: { id: string } }[] } }[]> {
   const data = await shopifyFetch(`
     {
       products(first: 20) {
@@ -278,7 +284,7 @@ async function fetchProducts(): Promise<{ id: string; title: string; variants: {
           node {
             id title
             variants(first: 1) {
-              edges { node { id priceV2 { amount } } }
+              edges { node { id } }
             }
           }
         }
@@ -296,7 +302,7 @@ export default function App() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [checkoutId, setCheckoutId] = useState<string | null>(null);
   const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
-  const [shopifyProducts, setShopifyProducts] = useState<{ id: string; title: string; variants: { edges: { node: { id: string; priceV2: { amount: string } } }[] } }[]>([]);
+  const [shopifyProducts, setShopifyProducts] = useState<{ id: string; title: string; variants: { edges: { node: { id: string } }[] } }[]>([]);
   const [addingToCart, setAddingToCart] = useState<string | null>(null);
   const toastTimerRef = useRef<number | null>(null);
   const bestSellerTrackRef = useRef<HTMLDivElement | null>(null);
@@ -373,42 +379,36 @@ export default function App() {
   }
 
   async function handleAddToCart(name: string) {
-    // Match product name to Shopify product (case-insensitive partial match)
     const match = shopifyProducts.find(p =>
       p.title.toLowerCase().includes(name.split(" ")[0].toLowerCase()) ||
       name.toLowerCase().includes(p.title.split(" ")[0].toLowerCase())
     );
 
-    const variantId = match?.variants?.edges?.[0]?.node?.id;
+    const merchandiseId = match?.variants?.edges?.[0]?.node?.id;
 
-    if (!variantId) {
-      // No matching Shopify product yet — still count it locally
-      setCartCount(c => c + 1);
-      showToast(`${name} added to your cart.`);
+    if (!merchandiseId) {
+      showToast(`${name} coming soon! 🍪`);
       return;
     }
 
     setAddingToCart(name);
     try {
-      let currentCheckoutId = checkoutId;
-      let currentUrl = checkoutUrl;
+      let currentCartId = checkoutId;
 
-      if (!currentCheckoutId) {
-        const checkout = await createCheckout();
-        currentCheckoutId = checkout.id;
-        currentUrl = checkout.webUrl;
-        setCheckoutId(currentCheckoutId);
-        setCheckoutUrl(currentUrl);
+      if (!currentCartId) {
+        const cart = await createCart();
+        currentCartId = cart.id;
+        setCheckoutId(currentCartId);
+        setCheckoutUrl(cart.checkoutUrl);
       }
 
-      const updated = await addLineItem(currentCheckoutId, variantId);
-      setCheckoutUrl(updated.webUrl);
-      const total = updated.lineItems.edges.reduce((sum, e) => sum + e.node.quantity, 0);
-      setCartCount(total);
+      const updated = await addToCart(currentCartId, merchandiseId);
+      setCheckoutUrl(updated.checkoutUrl);
+      setCartCount(updated.totalQuantity);
       showToast(`${name} added to your cart! 🍪`);
     } catch (err) {
       console.error(err);
-      showToast("Couldn't add to cart. Please try again.");
+      showToast("Couldn't connect to checkout. Please try again.");
     } finally {
       setAddingToCart(null);
     }
