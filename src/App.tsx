@@ -38,7 +38,6 @@ type GalleryItem = {
 
 const navLinks = [
   { label: "Menu", id: "menu" },
-  { label: "Story", id: "about" },
   { label: "Favorites", id: "best-sellers" },
   { label: "Reviews", id: "reviews" },
   { label: "Gallery", id: "gallery" },
@@ -2313,7 +2312,7 @@ export default function App() {
               <div className="hero__visual">
                 <div className="hero__halo" />
                 <div className="hero__plate">
-                  <img src="/images/cookie-hero.png" alt="A tray of luxury cookies" />
+                  <img src="/images/tastees-logo.jpg" alt="Tastee's Cookies Logo" style={{ objectFit: "contain", background: "transparent" }} />
                 </div>
                 <span className="cookie-float cookie-float--one" />
                 <span className="cookie-float cookie-float--two" />
@@ -2371,80 +2370,6 @@ export default function App() {
                     </div>
                   </article>
                 ))}
-              </div>
-            </div>
-          </section>
-
-          <section className="section" id="about">
-            <div className="container about-grid">
-              <div className="about-copy reveal" data-reveal>
-                <div className="section__head" style={{ marginBottom: 0 }}>
-                  <p className="eyebrow">Our Story</p>
-                  <h2 className="section__title">Baked with love, shared with joy.</h2>
-                </div>
-
-                <p>
-                  Tastee's Cookies began as a small kitchen obsession: perfecting the balance between crisp edges, molten centers, and an aromatic finish.
-                  Today, every batch is handcrafted with the same care, using ingredients chosen for richness, texture, and depth.
-                </p>
-                <p>
-                  We bake with heart, which means every cookie has to taste extraordinary and feel beautifully considered — from the first glance to the very last bite.
-                </p>
-
-                <ul className="about-list">
-                  <li>
-                    <span className="about-list__bullet" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M20 6L9 17l-5-5" />
-                      </svg>
-                    </span>
-                    <div>
-                      <strong>Fresh ingredients, every batch</strong>
-                      <span>Butter, chocolate, and vanilla are selected for flavor first, then crafted into an elegant dessert experience.</span>
-                    </div>
-                  </li>
-                  <li>
-                    <span className="about-list__bullet" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M20 6L9 17l-5-5" />
-                      </svg>
-                    </span>
-                    <div>
-                      <strong>Slow-baked for a luxe texture</strong>
-                      <span>Our process keeps the center plush while the outer edge develops that irresistible bakery snap.</span>
-                    </div>
-                  </li>
-                  <li>
-                    <span className="about-list__bullet" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M20 6L9 17l-5-5" />
-                      </svg>
-                    </span>
-                    <div>
-                      <strong>Gift-ready presentation</strong>
-                      <span>Elegant boxes, rich tissue, and warm branding turn each delivery into a memorable reveal.</span>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="about-visual reveal" data-reveal>
-                <div className="about-visual__column">
-                  <div className="about-visual__tile">
-                    <img src="/images/caramel-crunch-cookie.png" alt="Caramel crunch cookie" />
-                  </div>
-                  <div className="about-visual__tile">
-                    <img src="/images/double-chocolate-cookie.png" alt="Double chocolate cookie" />
-                  </div>
-                </div>
-                <div className="about-visual__tile--tall">
-                  <img src="/images/cookie-bakery-scene.png" alt="Artisan bakery scene with warm cookies" />
-                </div>
-                <div className="about-quote">
-                  <p>
-                    “Our goal is simple: make every cookie feel like a premium ritual, not just a snack.”
-                  </p>
-                </div>
               </div>
             </div>
           </section>
