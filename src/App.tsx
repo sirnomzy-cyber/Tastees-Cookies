@@ -227,7 +227,7 @@ function renderBenefitIcon(kind: Benefit["icon"]) {
 }
 
 const SHOPIFY_DOMAIN = "909y05-xq.myshopify.com";
-const SHOPIFY_TOKEN  = "612fc94847a0e9554a69e1e8fd0db9ac";
+const SHOPIFY_TOKEN  = "b15acf5d699a2771a84f8ef6048a99f4";
 const STOREFRONT_URL = `https://${SHOPIFY_DOMAIN}/api/2024-04/graphql.json`;
 
 async function shopifyFetch(query: string, variables: Record<string, unknown> = {}) {
