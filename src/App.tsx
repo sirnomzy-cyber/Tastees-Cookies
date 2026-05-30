@@ -197,7 +197,6 @@ const gallery: GalleryItem[] = [
   { src: "/images/double-chocolate-cookie.png", alt: "Close-up of a double chocolate cookie", span: "square" },
   { src: "/images/caramel-crunch-cookie.png", alt: "Caramel crunch cookie with sea salt", span: "square" },
   { src: "/images/red-velvet-cookie.png", alt: "Red velvet cookie with white chocolate", span: "square" },
-  { src: "/images/oreo-cream-cookie.png", alt: "Oreo cream cookie with rich crumble", span: "wide" },
 ];
 
 const stars = Array.from({ length: 5 });
@@ -999,10 +998,11 @@ export default function App() {
         .section__title {
           margin: 0;
           max-width: 100%;
-          font-family: 'Playfair Display', Georgia, serif;
-          font-size: clamp(2.3rem, 4vw, 4.2rem);
-          line-height: 1.05;
-          letter-spacing: -0.03em;
+          font-family: 'DM Sans', sans-serif;
+          font-size: clamp(1.6rem, 2.8vw, 2.6rem);
+          font-weight: 800;
+          line-height: 1.1;
+          letter-spacing: -0.02em;
           white-space: nowrap;
         }
 
@@ -2186,7 +2186,7 @@ export default function App() {
 
           .section__title {
             white-space: normal;
-            font-size: clamp(1.8rem, 7vw, 2.8rem);
+            font-size: clamp(1.4rem, 5vw, 1.9rem);
           }
 
           .review-card__quote {
