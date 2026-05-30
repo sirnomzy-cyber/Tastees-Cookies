@@ -1834,34 +1834,44 @@ export default function App() {
         }
 
         .footer {
-          padding: 44px 0 32px;
+          padding: 0;
+          background: #1a0d0d;
+          margin-top: 60px;
         }
 
         .footer__panel {
-          padding: 28px;
-          border-radius: 34px;
-          border: 1px solid rgba(130, 60, 150, 0.12);
-          background: rgba(253, 248, 255, 0.88);
-          box-shadow: var(--shadow);
+          padding: 60px 40px 0;
+          background: transparent;
+          border: none;
+          border-radius: 0;
+          box-shadow: none;
         }
 
         .footer__grid {
           display: grid;
-          grid-template-columns: 1.1fr 0.9fr 0.8fr 0.9fr;
-          gap: 24px;
+          grid-template-columns: 1.4fr 1fr 1fr 1fr;
+          gap: 40px;
           align-items: start;
+          padding-bottom: 48px;
+          border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
         .footer h3,
         .footer h4 {
-          margin: 0;
+          margin: 0 0 20px;
+          font-size: 0.72rem;
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.45);
         }
 
         .footer p,
         .footer a,
         .footer li {
-          color: var(--muted);
-          line-height: 1.8;
+          color: rgba(255,255,255,0.65);
+          line-height: 1.9;
+          font-size: 0.9rem;
         }
 
         .footer ul {
@@ -1869,7 +1879,46 @@ export default function App() {
           padding: 0;
           list-style: none;
           display: grid;
-          gap: 8px;
+          gap: 4px;
+        }
+
+        .footer__brand-desc {
+          margin: 14px 0 0;
+          color: rgba(255,255,255,0.5);
+          font-size: 0.88rem;
+          line-height: 1.7;
+          max-width: 26ch;
+        }
+
+        .footer__bottom {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+          flex-wrap: wrap;
+          padding: 20px 0;
+        }
+
+        .footer__bottom p {
+          margin: 0;
+          font-size: 0.82rem;
+          color: rgba(255,255,255,0.35);
+        }
+
+        .footer__bottom-links {
+          display: flex;
+          gap: 24px;
+        }
+
+        .footer__bottom-links a {
+          font-size: 0.82rem;
+          color: rgba(255,255,255,0.35);
+          text-decoration: none;
+          cursor: pointer;
+        }
+
+        .footer__bottom-links a:hover {
+          color: rgba(255,255,255,0.7);
         }
 
         .footer__socials {
@@ -2640,67 +2689,63 @@ export default function App() {
           <div className="container footer__panel">
             <div className="footer__grid">
               <div>
-                <div className="brand" style={{ marginBottom: 18 }}>
+                <div className="brand" style={{ marginBottom: 0 }}>
                   <span className="brand__mark" aria-hidden="true" style={{ background: "none", boxShadow: "none", overflow: "hidden", padding: 0 }}>
                     <img src="/images/tastees-logo.jpg" alt="Tastee's Cookies logo" style={{ width: "42px", height: "42px", objectFit: "contain", borderRadius: "10px" }} />
                   </span>
                   <span className="brand__copy">
-                    <span className="brand__name" style={{ fontFamily: "'Courgette', cursive", background: "linear-gradient(120deg, #6b1fa8, #d63a7a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Tastee's Cookies</span>
-                    <span className="brand__tag">Freshly baked happiness</span>
+                    <span className="brand__name" style={{ fontFamily: "'Courgette', cursive", background: "linear-gradient(120deg, #d63a7a, #f0a0c0)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Tastee's Cookies</span>
                   </span>
                 </div>
-                <p>
-                  Real cookies, baked with love and delivered with a smile — made for every sweet moment.
+                <p className="footer__brand-desc">
+                  Handcrafted cookies baked fresh daily, delivered warm, and made for every sweet moment.
                 </p>
-
               </div>
 
               <div>
-                <h4>Navigate</h4>
+                <h4>Navigation</h4>
                 <ul>
                   {navLinks.map((link) => (
                     <li key={link.id}>
-                      <button
-                        onClick={() => scrollToId(link.id)}
-                        style={{
-                          padding: 0,
-                          border: 0,
-                          background: "none",
-                          color: "inherit",
-                          cursor: "pointer",
-                        }}
-                      >
+                      <button onClick={() => scrollToId(link.id)} style={{ padding: 0, border: 0, background: "none", color: "rgba(255,255,255,0.65)", cursor: "pointer", fontSize: "0.9rem" }}>
                         {link.label}
                       </button>
                     </li>
                   ))}
+                  <li>
+                    <button onClick={handleCheckout} style={{ padding: 0, border: 0, background: "none", color: "rgba(255,255,255,0.65)", cursor: "pointer", fontSize: "0.9rem" }}>
+                      Order Now
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h4>Opening Hours</h4>
+                <ul>
+                  <li style={{ display: "flex", justifyContent: "space-between", gap: "12px" }}><span>Mon – Fri</span><span>8am – 8pm</span></li>
+                  <li style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "6px", marginTop: "2px", display: "flex", justifyContent: "space-between", gap: "12px" }}><span>Saturday</span><span>9am – 9pm</span></li>
+                  <li style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "6px", marginTop: "2px", display: "flex", justifyContent: "space-between", gap: "12px" }}><span>Sunday</span><span>9am – 6pm</span></li>
                 </ul>
               </div>
 
               <div>
                 <h4>Contact</h4>
                 <ul>
-                  <li>info@tasteescookies.com</li>
                   <li>+1 (240) 877 - 8752</li>
-                  <li>520 Larned Loop, Apt 112,</li>
-                  <li>Cary, North Carolina 27513,</li>
-                  <li>United States</li>
-                </ul>
-              </div>
-
-              <div>
-                <h4>Opening hours</h4>
-                <ul>
-                  <li>Mon - Fri: 8:00 AM - 8:00 PM</li>
-                  <li>Saturday: 9:00 AM - 9:00 PM</li>
-                  <li>Sunday: 9:00 AM - 6:00 PM</li>
+                  <li>info@tasteescookies.com</li>
+                  <li>520 Larned Loop, Apt 112, Cary, North Carolina 27513, United States</li>
                 </ul>
               </div>
             </div>
 
             <div className="footer__bottom">
-              <p style={{ margin: 0 }}>&copy; {new Date().getFullYear()} Tastee's Cookies. All rights reserved.</p>
-              <p style={{ margin: 0 }}>Freshly baked cookies for gifting, gatherings, and pure joy.</p>
+              <p>&copy; {new Date().getFullYear()} Tastee's Cookies. All rights reserved.</p>
+              <div className="footer__bottom-links">
+                <a>Privacy Policy</a>
+                <a>Terms of Service</a>
+                <a>Cookie Policy</a>
+              </div>
             </div>
           </div>
         </footer>
