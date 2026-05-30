@@ -226,12 +226,78 @@ function renderBenefitIcon(kind: Benefit["icon"]) {
   }
 }
 
+const SHOPIFY_DOMAIN = "909y05-xq.myshopify.com";
+const SHOPIFY_TOKEN  = "612fc94847a0e9554a69e1e8fd0db9ac";
+const STOREFRONT_URL = `https://${SHOPIFY_DOMAIN}/api/2024-01/graphql.json`;
+
+async function shopifyFetch(query: string, variables = {}) {
+  const res = await fetch(STOREFRONT_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Shopify-Storefront-Access-Token": SHOPIFY_TOKEN,
+    },
+    body: JSON.stringify({ query, variables }),
+  });
+  return res.json();
+}
+
+async function createCheckout(): Promise<{ id: string; webUrl: string }> {
+  const data = await shopifyFetch(`
+    mutation {
+      checkoutCreate(input: {}) {
+        checkout { id webUrl }
+      }
+    }
+  `);
+  return data.data.checkoutCreate.checkout;
+}
+
+async function addLineItem(checkoutId: string, variantId: string): Promise<{ id: string; webUrl: string; lineItems: { edges: { node: { quantity: number } }[] } }> {
+  const data = await shopifyFetch(`
+    mutation($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
+      checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
+        checkout {
+          id webUrl
+          lineItems(first: 50) { edges { node { quantity } } }
+        }
+      }
+    }
+  `, {
+    checkoutId,
+    lineItems: [{ variantId, quantity: 1 }],
+  });
+  return data.data.checkoutLineItemsAdd.checkout;
+}
+
+async function fetchProducts(): Promise<{ id: string; title: string; variants: { edges: { node: { id: string; priceV2: { amount: string } } }[] } }[]> {
+  const data = await shopifyFetch(`
+    {
+      products(first: 20) {
+        edges {
+          node {
+            id title
+            variants(first: 1) {
+              edges { node { id priceV2 { amount } } }
+            }
+          }
+        }
+      }
+    }
+  `);
+  return data.data?.products?.edges?.map((e: { node: unknown }) => e.node) ?? [];
+}
+
 export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(2);
+  const [cartCount, setCartCount] = useState(0);
   const [toast, setToast] = useState<string>("Fresh out of the oven, packed with love! 🍪");
   const [activeReview, setActiveReview] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [checkoutId, setCheckoutId] = useState<string | null>(null);
+  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
+  const [shopifyProducts, setShopifyProducts] = useState<{ id: string; title: string; variants: { edges: { node: { id: string; priceV2: { amount: string } } }[] } }[]>([]);
+  const [addingToCart, setAddingToCart] = useState<string | null>(null);
   const toastTimerRef = useRef<number | null>(null);
   const bestSellerTrackRef = useRef<HTMLDivElement | null>(null);
 
@@ -294,15 +360,67 @@ export default function App() {
     return () => window.removeEventListener("wheel", handleWheel);
   }, [lightboxIndex]);
 
-  function handleAddToCart(name: string) {
-    setCartCount((count) => count + 1);
-    setToast(`${name} added to your cart.`);
-    if (toastTimerRef.current !== null) {
-      window.clearTimeout(toastTimerRef.current);
-    }
+  useEffect(() => {
+    fetchProducts().then(setShopifyProducts).catch(console.error);
+  }, []);
+
+  function showToast(message: string) {
+    setToast(message);
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
     toastTimerRef.current = window.setTimeout(() => {
       setToast("Fresh out of the oven, packed with love! 🍪");
     }, 2600);
+  }
+
+  async function handleAddToCart(name: string) {
+    // Match product name to Shopify product (case-insensitive partial match)
+    const match = shopifyProducts.find(p =>
+      p.title.toLowerCase().includes(name.split(" ")[0].toLowerCase()) ||
+      name.toLowerCase().includes(p.title.split(" ")[0].toLowerCase())
+    );
+
+    const variantId = match?.variants?.edges?.[0]?.node?.id;
+
+    if (!variantId) {
+      // No matching Shopify product yet — still count it locally
+      setCartCount(c => c + 1);
+      showToast(`${name} added to your cart.`);
+      return;
+    }
+
+    setAddingToCart(name);
+    try {
+      let currentCheckoutId = checkoutId;
+      let currentUrl = checkoutUrl;
+
+      if (!currentCheckoutId) {
+        const checkout = await createCheckout();
+        currentCheckoutId = checkout.id;
+        currentUrl = checkout.webUrl;
+        setCheckoutId(currentCheckoutId);
+        setCheckoutUrl(currentUrl);
+      }
+
+      const updated = await addLineItem(currentCheckoutId, variantId);
+      setCheckoutUrl(updated.webUrl);
+      const total = updated.lineItems.edges.reduce((sum, e) => sum + e.node.quantity, 0);
+      setCartCount(total);
+      showToast(`${name} added to your cart! 🍪`);
+    } catch (err) {
+      console.error(err);
+      showToast("Couldn't add to cart. Please try again.");
+    } finally {
+      setAddingToCart(null);
+    }
+  }
+
+  function handleCheckout() {
+    if (checkoutUrl) {
+      window.open(checkoutUrl, "_blank");
+    } else {
+      scrollToId("menu");
+      showToast("Add a cookie to your cart first! 🍪");
+    }
   }
 
   function scrollBestSellers(direction: "left" | "right") {
@@ -2028,7 +2146,7 @@ export default function App() {
             </nav>
 
             <div className="nav-actions">
-              <button className="nav-chip" onClick={() => scrollToId("order")}>
+              <button className="nav-chip" onClick={handleCheckout}>
                 <span className="nav-chip__count">{cartCount}</span>
                 Order in progress
               </button>
@@ -2069,7 +2187,7 @@ export default function App() {
               <button
                 onClick={() => {
                   setMobileOpen(false);
-                  scrollToId("order");
+                  handleCheckout();
                 }}
               >
                 Order Now
@@ -2091,7 +2209,7 @@ export default function App() {
                   Tastee's Cookies turns everyday cravings into a luxurious ritual.
                 </p>
                 <div className="hero__actions">
-                  <button className="button button--primary" onClick={() => scrollToId("order")}>
+                  <button className="button button--primary" onClick={handleCheckout}>
                     Order Now
                     <span aria-hidden="true">→</span>
                   </button>
@@ -2143,8 +2261,12 @@ export default function App() {
                         <span className="cookie-card__price">{cookie.price}</span>
                       </div>
                       <p className="cookie-card__desc">{cookie.description}</p>
-                      <button className="cookie-card__action" onClick={() => handleAddToCart(cookie.name)}>
-                        Add to cart
+                      <button
+                        className="cookie-card__action"
+                        onClick={() => handleAddToCart(cookie.name)}
+                        disabled={addingToCart === cookie.name}
+                      >
+                        {addingToCart === cookie.name ? "Adding..." : "Add to cart"}
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M5 12h14" />
                           <path d="M12 5l7 7-7 7" />
