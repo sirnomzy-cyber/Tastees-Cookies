@@ -1978,7 +1978,8 @@ export default function App() {
           }
 
           .nav-links,
-          .nav-actions .nav-chip {
+          .nav-actions .nav-chip,
+          .nav-actions .button--primary {
             display: none;
           }
 
@@ -2149,6 +2150,9 @@ export default function App() {
               <button className="nav-chip" onClick={handleCheckout}>
                 <span className="nav-chip__count">{cartCount}</span>
                 Order in progress
+              </button>
+              <button className="button button--primary" onClick={handleCheckout} style={{ padding: "10px 22px", fontSize: "0.85rem" }}>
+                Order Now
               </button>
               <button
                 className="menu-toggle"
