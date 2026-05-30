@@ -167,26 +167,44 @@ const testimonials: Testimonial[] = [
   {
     name: "Ava Thompson",
     role: "Wedding planner",
-    quote:
-      "Tastee's Cookies turned our dessert table into the most photographed part of the event. The cookies taste as premium as they look.",
+    quote: "Tastee's Cookies turned our dessert table into the most photographed part of the event. The cookies taste as premium as they look.",
     initials: "AT",
-    tint: "from-[#f2d7b6] to-[#b97d4c]",
+    tint: "#f2d7b6, #b97d4c",
   },
   {
     name: "Noah Patel",
     role: "Coffee bar owner",
-    quote:
-      "We pair these with espresso every afternoon, and the response is always the same: people ask where the cookies are from.",
+    quote: "We pair these with espresso every afternoon, and the response is always the same: people ask where the cookies are from.",
     initials: "NP",
-    tint: "from-[#ead8c6] to-[#8d5a32]",
+    tint: "#ead8c6, #8d5a32",
   },
   {
     name: "Sophia Martinez",
     role: "Frequent customer",
-    quote:
-      "The packaging feels luxury, the delivery is seamless, and the flavors have real depth. The caramel cookie is unforgettable.",
+    quote: "The packaging feels luxury, the delivery is seamless, and the flavors have real depth. The caramel cookie is unforgettable.",
     initials: "SM",
-    tint: "from-[#f0e1cf] to-[#9b4a37]",
+    tint: "#f0e1cf, #9b4a37",
+  },
+  {
+    name: "James Okafor",
+    role: "Corporate gifting manager",
+    quote: "We ordered 200 boxes for our end-of-year gifts and every single person reached out to ask where they came from. Absolutely brilliant.",
+    initials: "JO",
+    tint: "#d8e8f0, #3a6a8d",
+  },
+  {
+    name: "Priya Nair",
+    role: "Food blogger",
+    quote: "I've reviewed hundreds of cookie brands and Tastee's stands apart — the texture, the aroma, the presentation. It's the full package.",
+    initials: "PN",
+    tint: "#f0d8e8, #8d3a6a",
+  },
+  {
+    name: "Marcus Reid",
+    role: "Birthday party host",
+    quote: "Ordered the Red Velvet and Sugar Cookie for my daughter's birthday. The kids went crazy and the parents kept sneaking more. Total hit!",
+    initials: "MR",
+    tint: "#d8f0e8, #3a8d6a",
   },
 ];
 
@@ -355,7 +373,7 @@ export default function App() {
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setActiveReview((current) => (current + 1) % testimonials.length);
+      setActiveReview((current) => (current + 1) % 2);
     }, 6500);
 
     return () => window.clearInterval(timer);
@@ -1524,14 +1542,6 @@ export default function App() {
         .reviews-slider {
           position: relative;
           overflow: hidden;
-          border-radius: 34px;
-          border: 1px solid rgba(130, 60, 150, 0.14);
-          background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(248, 238, 255, 0.92));
-          box-shadow: var(--shadow-strong);
-        }
-
-        .reviews-viewport {
-          overflow: hidden;
         }
 
         .reviews-track {
@@ -1541,11 +1551,21 @@ export default function App() {
           transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        .review-card {
-          padding: clamp(22px, 4vw, 36px);
-          min-height: 100%;
+        .reviews-page {
           display: grid;
-          gap: 20px;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+        }
+
+        .review-card {
+          padding: clamp(18px, 3vw, 28px);
+          border-radius: 24px;
+          border: 1px solid rgba(130, 60, 150, 0.14);
+          background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(248, 238, 255, 0.92));
+          box-shadow: var(--shadow);
+          display: grid;
+          gap: 16px;
+          align-content: start;
         }
 
         .review-card__header {
@@ -1597,9 +1617,8 @@ export default function App() {
 
         .review-card__quote {
           margin: 0;
-          max-width: 70ch;
           font-family: 'Playfair Display', Georgia, serif;
-          font-size: clamp(1.5rem, 3vw, 2.3rem);
+          font-size: clamp(0.95rem, 1.4vw, 1.1rem);
           line-height: 1.28;
           letter-spacing: -0.02em;
         }
@@ -2188,6 +2207,10 @@ export default function App() {
             font-size: clamp(1.4rem, 5vw, 1.9rem);
           }
 
+          .reviews-page {
+            grid-template-columns: 1fr;
+          }
+
           .review-card__quote {
             font-size: clamp(1.25rem, 5vw, 1.7rem);
           }
@@ -2470,47 +2493,51 @@ export default function App() {
                   className="reviews-track"
                   style={{ transform: `translateX(-${activeReview * 100}%)` }}
                 >
-                  {testimonials.map((testimonial) => (
-                    <article key={testimonial.name} className="review-card">
-                      <div className="review-card__header">
-                        <div className="review-card__person">
-                          <div className="review-card__avatar" style={{ background: `linear-gradient(135deg, ${testimonial.tint})` }}>
-                            {testimonial.initials}
+                  {[0, 1].map((page) => (
+                    <div key={page} className="reviews-page">
+                      {testimonials.slice(page * 3, page * 3 + 3).map((testimonial) => (
+                        <article key={testimonial.name} className="review-card">
+                          <div className="review-card__header">
+                            <div className="review-card__person">
+                              <div className="review-card__avatar" style={{ background: `linear-gradient(135deg, ${testimonial.tint})` }}>
+                                {testimonial.initials}
+                              </div>
+                              <div>
+                                <p className="review-card__name">{testimonial.name}</p>
+                                <span className="review-card__role">{testimonial.role}</span>
+                              </div>
+                            </div>
+                            <div className="review-stars" aria-label="5 star rating">
+                              {stars.map((_, index) => (
+                                <svg key={index} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                </svg>
+                              ))}
+                            </div>
                           </div>
-                          <div>
-                            <p className="review-card__name">{testimonial.name}</p>
-                            <span className="review-card__role">{testimonial.role}</span>
-                          </div>
-                        </div>
-                        <div className="review-stars" aria-label="5 star rating">
-                          {stars.map((_, index) => (
-                            <svg key={index} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                            </svg>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="review-card__accent" />
-                      <p className="review-card__quote">{testimonial.quote}</p>
-                    </article>
+                          <div className="review-card__accent" />
+                          <p className="review-card__quote">{testimonial.quote}</p>
+                        </article>
+                      ))}
+                    </div>
                   ))}
                 </div>
               </div>
 
               <div className="review-controls">
-                <div className="review-dots" role="tablist" aria-label="Select review">
-                  {testimonials.map((testimonial, index) => (
+                <div className="review-dots" role="tablist" aria-label="Select review page">
+                  {[0, 1].map((page) => (
                     <button
-                      key={testimonial.name}
+                      key={page}
                       className="review-dot"
-                      aria-label={`Show review from ${testimonial.name}`}
-                      aria-current={activeReview === index}
-                      onClick={() => jumpToReview(index)}
+                      aria-label={`Show reviews page ${page + 1}`}
+                      aria-current={activeReview === page}
+                      onClick={() => jumpToReview(page)}
                     />
                   ))}
                 </div>
-                <button className="button button--ghost" onClick={() => jumpToReview((activeReview + 1) % testimonials.length)}>
-                  Next review
+                <button className="button button--ghost" onClick={() => jumpToReview((activeReview + 1) % 2)}>
+                  Next reviews
                 </button>
               </div>
             </div>
