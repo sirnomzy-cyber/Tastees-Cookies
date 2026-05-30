@@ -168,42 +168,42 @@ const testimonials: Testimonial[] = [
     name: "Ava Thompson",
     role: "Wedding planner",
     quote: "Tastee's Cookies turned our dessert table into the most photographed part of the event. The cookies taste as premium as they look.",
-    initials: "AT",
+    initials: "😊",
     tint: "#f2d7b6, #b97d4c",
   },
   {
     name: "Noah Patel",
     role: "Coffee bar owner",
     quote: "We pair these with espresso every afternoon, and the response is always the same: people ask where the cookies are from.",
-    initials: "NP",
+    initials: "😍",
     tint: "#ead8c6, #8d5a32",
   },
   {
     name: "Sophia Martinez",
     role: "Frequent customer",
     quote: "The packaging feels luxury, the delivery is seamless, and the flavors have real depth. The caramel cookie is unforgettable.",
-    initials: "SM",
+    initials: "🤩",
     tint: "#f0e1cf, #9b4a37",
   },
   {
     name: "James Okafor",
     role: "Corporate gifting manager",
     quote: "We ordered 200 boxes for our end-of-year gifts and every single person reached out to ask where they came from. Absolutely brilliant.",
-    initials: "JO",
+    initials: "👏",
     tint: "#d8e8f0, #3a6a8d",
   },
   {
     name: "Priya Nair",
     role: "Food blogger",
     quote: "I've reviewed hundreds of cookie brands and Tastee's stands apart — the texture, the aroma, the presentation. It's the full package.",
-    initials: "PN",
+    initials: "✍️",
     tint: "#f0d8e8, #8d3a6a",
   },
   {
     name: "Marcus Reid",
     role: "Birthday party host",
     quote: "Ordered the Red Velvet and Sugar Cookie for my daughter's birthday. The kids went crazy and the parents kept sneaking more. Total hit!",
-    initials: "MR",
+    initials: "🎉",
     tint: "#d8f0e8, #3a8d6a",
   },
 ];
@@ -1558,12 +1558,13 @@ export default function App() {
         }
 
         .review-card {
-          padding: clamp(18px, 3vw, 28px);
-          border-radius: 24px;
-          border: 1px solid rgba(130, 60, 150, 0.14);
-          background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(248, 238, 255, 0.92));
-          box-shadow: var(--shadow);
-          display: grid;
+          padding: clamp(18px, 3vw, 26px);
+          border-radius: 18px;
+          border: 1px solid rgba(220, 210, 230, 0.6);
+          background: #fff;
+          box-shadow: 0 4px 24px rgba(107, 31, 168, 0.06);
+          display: flex;
+          flex-direction: column;
           gap: 16px;
           align-content: start;
         }
@@ -1571,62 +1572,64 @@ export default function App() {
         .review-card__header {
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          gap: 18px;
-          flex-wrap: wrap;
+          gap: 6px;
         }
 
         .review-card__person {
           display: flex;
           align-items: center;
-          gap: 16px;
+          gap: 12px;
+          margin-top: auto;
+          padding-top: 14px;
+          border-top: 1px solid rgba(220, 210, 230, 0.5);
         }
 
         .review-card__avatar {
-          width: 56px;
-          height: 56px;
+          width: 44px;
+          height: 44px;
           border-radius: 50%;
           display: grid;
           place-items: center;
-          font-weight: 800;
-          color: #fff8f2;
-          background: linear-gradient(135deg, rgba(91, 30, 138, 0.96), rgba(194, 56, 126, 0.9));
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.36);
+          font-size: 1.2rem;
+          background: rgba(245, 235, 255, 0.8);
+          border: 1px solid rgba(200, 180, 220, 0.4);
+          flex-shrink: 0;
         }
 
         .review-card__name {
           margin: 0;
-          font-size: 1.06rem;
+          font-size: 0.98rem;
+          font-weight: 700;
+          color: var(--text);
         }
 
         .review-card__role {
           color: var(--muted);
-          font-size: 0.92rem;
+          font-size: 0.82rem;
         }
 
         .review-stars {
           display: inline-flex;
-          gap: 4px;
-          color: #c2387e;
+          gap: 3px;
+          color: #c9922a;
         }
 
         .review-stars svg {
-          width: 15px;
-          height: 15px;
+          width: 14px;
+          height: 14px;
         }
 
         .review-card__quote {
           margin: 0;
           font-family: 'Playfair Display', Georgia, serif;
-          font-size: clamp(0.95rem, 1.4vw, 1.1rem);
-          line-height: 1.28;
-          letter-spacing: -0.02em;
+          font-size: clamp(0.9rem, 1.3vw, 1.02rem);
+          line-height: 1.7;
+          color: #3a2a4a;
+          flex: 1;
         }
 
         .review-card__accent {
-          height: 1px;
-          width: 100%;
-          background: linear-gradient(90deg, transparent, rgba(194, 56, 126, 0.42), transparent);
+          display: none;
         }
 
         .review-controls {
@@ -2498,15 +2501,6 @@ export default function App() {
                       {testimonials.slice(page * 3, page * 3 + 3).map((testimonial) => (
                         <article key={testimonial.name} className="review-card">
                           <div className="review-card__header">
-                            <div className="review-card__person">
-                              <div className="review-card__avatar" style={{ background: `linear-gradient(135deg, ${testimonial.tint})` }}>
-                                {testimonial.initials}
-                              </div>
-                              <div>
-                                <p className="review-card__name">{testimonial.name}</p>
-                                <span className="review-card__role">{testimonial.role}</span>
-                              </div>
-                            </div>
                             <div className="review-stars" aria-label="5 star rating">
                               {stars.map((_, index) => (
                                 <svg key={index} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -2515,8 +2509,14 @@ export default function App() {
                               ))}
                             </div>
                           </div>
-                          <div className="review-card__accent" />
-                          <p className="review-card__quote">{testimonial.quote}</p>
+                          <p className="review-card__quote">❝ {testimonial.quote}</p>
+                          <div className="review-card__person">
+                            <div className="review-card__avatar">{testimonial.initials}</div>
+                            <div>
+                              <p className="review-card__name">{testimonial.name}</p>
+                              <span className="review-card__role">{testimonial.role}</span>
+                            </div>
+                          </div>
                         </article>
                       ))}
                     </div>
