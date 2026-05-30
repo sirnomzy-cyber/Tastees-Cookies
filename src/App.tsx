@@ -2652,26 +2652,7 @@ export default function App() {
                 <p>
                   Real cookies, baked with love and delivered with a smile — made for every sweet moment.
                 </p>
-                <div className="footer__socials" aria-label="Social links">
-                  <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="4" y="4" width="16" height="16" rx="5" />
-                      <path d="M9 12a3 3 0 116 0 3 3 0 01-6 0z" />
-                      <path d="M17.5 6.5h.01" />
-                    </svg>
-                  </a>
-                  <a href="https://tiktok.com" target="_blank" rel="noreferrer" aria-label="TikTok">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M14 3v10.2a4.4 4.4 0 11-4-4.36" />
-                      <path d="M14 3c.5 2.5 2.2 4.1 5 4.1" />
-                    </svg>
-                  </a>
-                  <a href="https://pinterest.com" target="_blank" rel="noreferrer" aria-label="Pinterest">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 22a10 10 0 10-2.6-19.65c-2.46.85-3.7 2.55-3.7 5.04 0 1.47.63 2.76 1.73 3.46.27.17.58.03.66-.25.06-.2.21-.69.28-.95.08-.28.05-.39-.15-.62-.44-.52-.7-1.2-.7-2 0-2.43 1.88-4.6 4.9-4.6 2.67 0 4.35 1.63 4.35 3.96 0 2.98-1.32 5.5-3.28 5.5-.93 0-1.63-.77-1.4-1.72.26-1.08.76-2.25.76-3.03 0-.7-.38-1.28-1.16-1.28-.92 0-1.66.95-1.66 2.22 0 .81.27 1.36.27 1.36l-1.1 4.64c-.33 1.35-.08 3.01-.04 3.18" />
-                    </svg>
-                  </a>
-                </div>
+
               </div>
 
               <div>
