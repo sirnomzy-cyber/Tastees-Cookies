@@ -259,7 +259,7 @@ async function createCart(): Promise<{ id: string; checkoutUrl: string }> {
   return data.data.cartCreate.cart;
 }
 
-async function addToCart(cartId: string, merchandiseId: string): Promise<{ id: string; checkoutUrl: string; totalQuantity: number }> {
+async function addToCart(cartId: string, merchandiseId: string, quantity = 1): Promise<{ id: string; checkoutUrl: string; totalQuantity: number }> {
   const data = await shopifyFetch(`
     mutation($cartId: ID!, $lines: [CartLineInput!]!) {
       cartLinesAdd(cartId: $cartId, lines: $lines) {
@@ -378,7 +378,7 @@ export default function App() {
     }, 2600);
   }
 
-  async function handleAddToCart(name: string) {
+  async function handleAddToCart(name: string, quantity = 1) {
     const match = shopifyProducts.find(p =>
       p.title.toLowerCase().includes(name.split(" ")[0].toLowerCase()) ||
       name.toLowerCase().includes(p.title.split(" ")[0].toLowerCase())
@@ -402,7 +402,7 @@ export default function App() {
         setCheckoutUrl(cart.checkoutUrl);
       }
 
-      const updated = await addToCart(currentCartId, merchandiseId);
+      const updated = await addToCart(currentCartId, merchandiseId, quantity);
       setCheckoutUrl(updated.checkoutUrl);
       setCartCount(updated.totalQuantity);
       showToast(`${name} added to your cart! 🍪`);
@@ -414,7 +414,15 @@ export default function App() {
     }
   }
 
-  function handleCheckout() {
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
+
+  function getQty(name: string) {
+    return quantities[name] ?? 1;
+  }
+
+  function changeQty(name: string, delta: number) {
+    setQuantities(q => ({ ...q, [name]: Math.max(1, (q[name] ?? 1) + delta) }));
+  }
     if (checkoutUrl) {
       window.open(checkoutUrl, "_blank");
     } else {
@@ -1090,6 +1098,49 @@ export default function App() {
           background: rgba(255, 250, 246, 0.92);
           border: 1px solid rgba(130, 60, 150, 0.12);
           font-weight: 800;
+          color: var(--text);
+        }
+
+        .cookie-card__footer {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-top: 14px;
+        }
+
+        .qty-stepper {
+          display: flex;
+          align-items: center;
+          gap: 0;
+          border: 1.5px solid rgba(107, 31, 168, 0.2);
+          border-radius: 50px;
+          overflow: hidden;
+          background: rgba(255,255,255,0.8);
+        }
+
+        .qty-btn {
+          width: 34px;
+          height: 34px;
+          border: 0;
+          background: none;
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: #6b1fa8;
+          cursor: pointer;
+          display: grid;
+          place-items: center;
+          transition: background 0.15s;
+        }
+
+        .qty-btn:hover {
+          background: rgba(107, 31, 168, 0.08);
+        }
+
+        .qty-value {
+          min-width: 28px;
+          text-align: center;
+          font-size: 0.9rem;
+          font-weight: 700;
           color: var(--text);
         }
 
@@ -2265,17 +2316,24 @@ export default function App() {
                         <span className="cookie-card__price">{cookie.price}</span>
                       </div>
                       <p className="cookie-card__desc">{cookie.description}</p>
-                      <button
-                        className="cookie-card__action"
-                        onClick={() => handleAddToCart(cookie.name)}
-                        disabled={addingToCart === cookie.name}
-                      >
-                        {addingToCart === cookie.name ? "Adding..." : "Add to cart"}
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M5 12h14" />
-                          <path d="M12 5l7 7-7 7" />
-                        </svg>
-                      </button>
+                      <div className="cookie-card__footer">
+                        <div className="qty-stepper">
+                          <button className="qty-btn" onClick={() => changeQty(cookie.name, -1)} aria-label="Decrease quantity">−</button>
+                          <span className="qty-value">{getQty(cookie.name)}</span>
+                          <button className="qty-btn" onClick={() => changeQty(cookie.name, 1)} aria-label="Increase quantity">+</button>
+                        </div>
+                        <button
+                          className="cookie-card__action"
+                          onClick={() => handleAddToCart(cookie.name, getQty(cookie.name))}
+                          disabled={addingToCart === cookie.name}
+                        >
+                          {addingToCart === cookie.name ? "Adding..." : "Add to cart"}
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M5 12h14" />
+                            <path d="M12 5l7 7-7 7" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </article>
                 ))}
