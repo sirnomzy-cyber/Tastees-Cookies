@@ -998,11 +998,12 @@ export default function App() {
 
         .section__title {
           margin: 0;
-          max-width: 12ch;
+          max-width: 100%;
           font-family: 'Playfair Display', Georgia, serif;
           font-size: clamp(2.3rem, 4vw, 4.2rem);
-          line-height: 0.98;
+          line-height: 1.05;
           letter-spacing: -0.03em;
+          white-space: nowrap;
         }
 
         .section__text {
@@ -1900,6 +1901,7 @@ export default function App() {
           backdrop-filter: blur(14px);
           box-shadow: 0 18px 42px rgba(40, 18, 8, 0.28);
           animation: toastIn 300ms ease;
+          display: none;
         }
 
         .toast strong {
@@ -2182,11 +2184,17 @@ export default function App() {
             padding: 18px;
           }
 
+          .section__title {
+            white-space: normal;
+            font-size: clamp(1.8rem, 7vw, 2.8rem);
+          }
+
           .review-card__quote {
             font-size: clamp(1.25rem, 5vw, 1.7rem);
           }
 
           .toast {
+            display: block;
             left: 10px;
             right: 10px;
             bottom: 10px;
