@@ -2699,9 +2699,11 @@ export default function App() {
               <div>
                 <h4>Contact</h4>
                 <ul>
-                  <li>hello@tasteescookies.com</li>
+                  <li>info@tasteescookies.com</li>
                   <li>+1 (240) 877 - 8752</li>
-                  <li>Texas, United States</li>
+                  <li>520 Larned Loop, Apt 112,</li>
+                  <li>Cary, North Carolina 27513,</li>
+                  <li>United States</li>
                 </ul>
               </div>
 
