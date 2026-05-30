@@ -209,11 +209,11 @@ const testimonials: Testimonial[] = [
 ];
 
 const gallery: GalleryItem[] = [
-  { src: "/images/cookie-hero.png", alt: "Luxury cookie platter on a marble surface", span: "wide" },
-  { src: "/images/cookie-bakery-scene.png", alt: "Upscale bakery table with warm cookies", span: "tall" },
-  { src: "/images/double-chocolate-cookie.png", alt: "Close-up of a double chocolate cookie", span: "square" },
-  { src: "/images/caramel-crunch-cookie.png", alt: "Caramel crunch cookie with sea salt", span: "square" },
-  { src: "/images/red-velvet-cookie.png", alt: "Red velvet cookie with white chocolate", span: "square" },
+  { src: "/images/Chocolate_Chip.jpg", alt: "Chocolate Chip Cookie", span: "wide" },
+  { src: "/images/Red_Velvet.jpg", alt: "Red Velvet Cookie", span: "tall" },
+  { src: "/images/Double_Chocolate_Chip.jpg", alt: "Double Chocolate Chip Cookie", span: "square" },
+  { src: "/images/Strawberry.jpg", alt: "Strawberry Cookie", span: "square" },
+  { src: "/images/Cinnamon_Roll.jpg", alt: "Cinnamon Roll", span: "square" },
 ];
 
 const stars = Array.from({ length: 5 });
@@ -1611,7 +1611,7 @@ export default function App() {
         .review-stars {
           display: inline-flex;
           gap: 3px;
-          color: #c9922a;
+          color: #d63a7a;
         }
 
         .review-stars svg {
