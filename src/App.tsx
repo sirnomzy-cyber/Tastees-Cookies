@@ -209,11 +209,12 @@ const testimonials: Testimonial[] = [
 ];
 
 const gallery: GalleryItem[] = [
-  { src: "/images/Chocolate_Chip.jpg", alt: "Chocolate Chip Cookie", span: "wide" },
-  { src: "/images/Red_Velvet.jpg", alt: "Red Velvet Cookie", span: "tall" },
+  { src: "/images/Chocolate_Chip.jpg", alt: "Chocolate Chip Cookie", span: "square" },
+  { src: "/images/Red_Velvet.jpg", alt: "Red Velvet Cookie", span: "square" },
   { src: "/images/Double_Chocolate_Chip.jpg", alt: "Double Chocolate Chip Cookie", span: "square" },
   { src: "/images/Strawberry.jpg", alt: "Strawberry Cookie", span: "square" },
   { src: "/images/Cinnamon_Roll.jpg", alt: "Cinnamon Roll", span: "square" },
+  { src: "/images/Peanut_Butter.jpg", alt: "Peanut Butter Cookie", span: "square" },
 ];
 
 const stars = Array.from({ length: 5 });
@@ -1663,9 +1664,8 @@ export default function App() {
 
         .gallery-grid {
           display: grid;
-          grid-template-columns: repeat(12, minmax(0, 1fr));
+          grid-template-columns: repeat(3, 1fr);
           gap: 16px;
-          grid-auto-flow: dense;
         }
 
         .gallery-item {
@@ -1713,9 +1713,12 @@ export default function App() {
           opacity: 1;
         }
 
-        .gallery-item--wide { grid-column: span 7; }
-        .gallery-item--tall { grid-column: span 5; min-height: 460px; }
-        .gallery-item--square { grid-column: span 4; }
+        .gallery-item--wide,
+        .gallery-item--tall,
+        .gallery-item--square { 
+          grid-column: span 1;
+          min-height: 280px;
+        }
 
         .cta-panel {
           position: relative;
@@ -1766,9 +1769,9 @@ export default function App() {
         .cta-panel h2 {
           margin: 0;
           font-family: 'Playfair Display', Georgia, serif;
-          font-size: clamp(2.6rem, 5vw, 5rem);
-          line-height: 0.95;
-          letter-spacing: -0.04em;
+          font-size: clamp(1.6rem, 3vw, 2.8rem);
+          line-height: 1.15;
+          letter-spacing: -0.02em;
         }
 
         .cta-panel p {
@@ -2067,7 +2070,11 @@ export default function App() {
           .gallery-item--wide,
           .gallery-item--tall,
           .gallery-item--square {
-            grid-column: span 6;
+            grid-column: span 1;
+          }
+
+          .gallery-grid {
+            grid-template-columns: repeat(2, 1fr);
           }
         }
 
@@ -2109,7 +2116,11 @@ export default function App() {
           .gallery-item--wide,
           .gallery-item--tall,
           .gallery-item--square {
-            grid-column: span 12;
+            grid-column: span 1;
+          }
+
+          .gallery-grid {
+            grid-template-columns: 1fr;
           }
 
           .benefit-grid {
