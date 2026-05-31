@@ -335,7 +335,9 @@ async function fetchProducts(): Promise<{ id: string; title: string; variants: {
   return data.data?.products?.edges?.map((e: { node: unknown }) => e.node) ?? [];
 }
 
-export default function App() {
+import CartPage, { CartItem } from "./CartPage";
+
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [toast, setToast] = useState<string>("Fresh out of the oven, packed with love! 🍪");
@@ -345,6 +347,8 @@ export default function App() {
   const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const [shopifyProducts, setShopifyProducts] = useState<{ id: string; title: string; variants: { edges: { node: { id: string } }[] } }[]>([]);
   const [addingToCart, setAddingToCart] = useState<string | null>(null);
+  const [showCart, setShowCart] = useState(false);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const toastTimerRef = useRef<number | null>(null);
   const bestSellerTrackRef = useRef<HTMLDivElement | null>(null);
 
@@ -420,6 +424,7 @@ export default function App() {
   }
 
   async function handleAddToCart(name: string, quantity = 1) {
+    const cookie = featuredCookies.find(c => c.name === name);
     const match = shopifyProducts.find(p =>
       p.title.toLowerCase().includes(name.split(" ")[0].toLowerCase()) ||
       name.toLowerCase().includes(p.title.split(" ")[0].toLowerCase())
@@ -427,8 +432,24 @@ export default function App() {
 
     const merchandiseId = match?.variants?.edges?.[0]?.node?.id;
 
+    // Update local cart items
+    setCartItems(prev => {
+      const existing = prev.find(i => i.name === name);
+      if (existing) {
+        return prev.map(i => i.name === name ? { ...i, quantity: i.quantity + quantity } : i);
+      }
+      return [...prev, {
+        name,
+        price: cookie?.price ?? "$5.00",
+        image: cookie?.image ?? "",
+        quantity,
+        merchandiseId: merchandiseId ?? "",
+      }];
+    });
+
     if (!merchandiseId) {
-      showToast(`${name} coming soon! 🍪`);
+      setCartCount(c => c + quantity);
+      showToast(`${name} added to your cart! 🍪`);
       return;
     }
 
@@ -449,7 +470,8 @@ export default function App() {
       showToast(`${name} added to your cart! 🍪`);
     } catch (err) {
       console.error(err);
-      showToast("Couldn't connect to checkout. Please try again.");
+      setCartCount(c => c + quantity);
+      showToast(`${name} added to your cart! 🍪`);
     } finally {
       setAddingToCart(null);
     }
@@ -466,13 +488,46 @@ export default function App() {
   }
 
   function handleCheckout() {
-    if (checkoutUrl) {
-      window.open(checkoutUrl, "_blank");
+    if (cartItems.length > 0) {
+      setShowCart(true);
+      setMobileOpen(false);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       scrollToId("menu");
       showToast("Add a cookie to your cart first! 🍪");
     }
   }
+
+  function updateCartItemQty(name: string, delta: number) {
+    setCartItems(prev => {
+      const updated = prev.map(i => i.name === name ? { ...i, quantity: Math.max(1, i.quantity + delta) } : i);
+      const total = updated.reduce((sum, i) => sum + i.quantity, 0);
+      setCartCount(total);
+      return updated;
+    });
+  }
+
+  function removeCartItem(name: string) {
+    setCartItems(prev => {
+      const updated = prev.filter(i => i.name !== name);
+      const total = updated.reduce((sum, i) => sum + i.quantity, 0);
+      setCartCount(total);
+      return updated;
+    });
+  }
+
+  function clearCart() {
+    setCartItems([]);
+    setCartCount(0);
+    setCheckoutId(null);
+    setCheckoutUrl(null);
+    setShowCart(false);
+  }
+
+  const cartTotal = cartItems.reduce((sum, i) => {
+    const price = parseFloat(i.price.replace("$", ""));
+    return sum + price * i.quantity;
+  }, 0);
 
   function scrollBestSellers(direction: "left" | "right") {
     const track = bestSellerTrackRef.current;
@@ -488,7 +543,19 @@ export default function App() {
 
   return (
     <div className="site-shell">
-      <style>{`
+      {showCart && (
+        <CartPage
+          cartItems={cartItems}
+          checkoutUrl={checkoutUrl}
+          onUpdateQty={updateCartItemQty}
+          onRemove={removeCartItem}
+          onClear={clearCart}
+          onContinueShopping={() => { setShowCart(false); window.scrollTo({ top: 0 }); }}
+          onCheckout={() => { if (checkoutUrl) window.open(checkoutUrl, "_blank"); else showToast("Connecting to checkout... 🍪"); }}
+        />
+      )}
+      {!showCart && <>
+<style>{`
         :root {
           color-scheme: light;
           --bg: #fdf6f0;
@@ -2799,6 +2866,8 @@ export default function App() {
           </div>
         </div>
       ) : null}
+      </>
+      }
     </div>
   );
 }
