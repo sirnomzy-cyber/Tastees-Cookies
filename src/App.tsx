@@ -57,12 +57,6 @@ const featuredCookies: Cookie[] = [
     image: "/images/Chocolate_Chip.jpg",
   },
   {
-    name: "Cinnamon Roll",
-    description: "Soft, pillowy dough swirled with warm cinnamon sugar and drizzled with a sweet vanilla glaze.",
-    price: "$5.00",
-    image: "/images/Cinnamon_Roll.jpg",
-  },
-  {
     name: "Double Chocolate Chip",
     description: "Intensely rich chocolate dough packed with melty chocolate chips for the ultimate chocoholic treat.",
     price: "$5.00",
@@ -97,6 +91,12 @@ const featuredCookies: Cookie[] = [
     description: "Light, buttery, and cheerfully topped with rainbow sprinkles — a timeless classic for all ages.",
     price: "$5.00",
     image: "/images/Sugar_Cookie.jpg",
+  },
+  {
+    name: "Cinnamon Roll",
+    description: "Soft, pillowy dough swirled with warm cinnamon sugar and drizzled with a sweet vanilla glaze.",
+    price: "$5.00",
+    image: "/images/Cinnamon_Roll.jpg",
   },
 ];
 
@@ -2215,6 +2215,10 @@ export default function App() {
             gap: 8px;
           }
 
+          .brand__mark--hide-mobile {
+            display: none;
+          }
+
           .brand__copy {
             flex: 1;
             text-align: center;
@@ -2303,11 +2307,11 @@ export default function App() {
               aria-label="Tastee's Cookies home"
               style={{ cursor: "pointer", background: "none", border: 0, padding: 0 }}
             >
-              <span className="brand__mark" aria-hidden="true" style={{ background: "none", boxShadow: "none", overflow: "hidden", padding: 0 }}>
+              <span className="brand__mark brand__mark--hide-mobile" aria-hidden="true" style={{ background: "none", boxShadow: "none", overflow: "hidden", padding: 0 }}>
                 <img src="/images/tastees-logo.jpg" alt="Tastee's Cookies logo" style={{ width: "42px", height: "42px", objectFit: "contain", borderRadius: "10px" }} />
               </span>
               <span className="brand__copy">
-                <span className="brand__name" style={{ fontFamily: "'Courgette', cursive", background: "linear-gradient(120deg, #6b1fa8, #d63a7a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Tastee's Cookies</span>
+                <span className="brand__name" style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 800, background: "linear-gradient(120deg, #6b1fa8, #d63a7a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Tastee's Cookies</span>
                 <span className="brand__tag">Freshly baked happiness</span>
               </span>
             </button>
