@@ -2109,11 +2109,11 @@ export default function App() {
           }
 
           .featured-grid {
-            grid-template-columns: repeat(6, minmax(0, 1fr));
+            grid-template-columns: repeat(2, 1fr);
           }
 
           .cookie-card {
-            grid-column: span 3;
+            grid-column: span 1;
           }
 
           .gallery-item--wide,
@@ -2166,6 +2166,10 @@ export default function App() {
           .gallery-item--tall,
           .gallery-item--square {
             grid-column: span 1;
+          }
+
+          .featured-grid {
+            grid-template-columns: 1fr;
           }
 
           .gallery-grid {
